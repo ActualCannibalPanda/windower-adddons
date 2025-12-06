@@ -11,6 +11,9 @@ local incomingCurrencyMenu2 = 0x118
 local outgoingCurrencyMenu1 = 0x10F
 local outgoingCurrencyMenu2 = 0x115
 
+local packetARecieved = false
+local packetBRecieved = false
+
 local currencyCache = {}
 
 local function inject()
@@ -58,7 +61,13 @@ windower.register_event("addon command", function(command, ...)
         if command == "search" or command == "s" then
             inject()
             local searchTerm = generateSearchTerm(table.unpack(arg))
-            coroutine.sleep(1.0)
+            packetARecieved = false
+            packetBRecieved = false
+            windower.add_to_chat(4, "Loading currency...")
+            while not (packetARecieved and packetBRecieved) do
+                -- use this so the game doesn't crash
+                coroutine.sleep(0.01)
+            end
             search(searchTerm)
         end
     else
@@ -76,5 +85,11 @@ windower.register_event("incoming chunk", function(id, original, modified, injec
                 currencyCache[name] = val
             end
         end
+    end
+    if id == incomingCurrencyMenu1 then
+        packetARecieved = true
+    end
+    if id == incomingCurrencyMenu2 then
+        packetBRecieved = true
     end
 end)
