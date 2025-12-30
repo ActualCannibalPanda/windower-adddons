@@ -1,3 +1,3 @@
-Currency addon usage:
-curr search <term> | curr s <term>
+# Currency addon usage:
+curr <term>
 > searches for currency that matches <term>
