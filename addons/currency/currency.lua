@@ -1,6 +1,6 @@
 _addon.name = 'currency'
 _addon.author = 'Cromakre'
-_addon.version = '1.0.0.0000'
+_addon.version = '1.0.1'
 _addon.command = 'curr'
 
 packets = require('packets')
