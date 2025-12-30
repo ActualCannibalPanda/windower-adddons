@@ -50,31 +50,26 @@ local function search(searchTerm)
 		table.insert(keys, k)
 	end
 	table.sort(keys)
-	for _, val in ipairs(keys) do
-		windower.add_to_chat(4, val .. "   " .. results[val])
+	if #keys > 0 then
+		for _, val in ipairs(keys) do
+			windower.add_to_chat(4, val .. "   " .. results[val])
+		end
+	else
+		windower.add_to_chat(4, "Couldn't find " .. searchTerm)
 	end
 end
 
-windower.register_event("addon command", function(command, ...)
-	if command ~= nil then
-		command = command:lower()
-		if command == "search" or command == "s" then
-			inject()
-			local searchTerm = generateSearchTerm(table.unpack(arg))
-			packetARecieved = false
-			packetBRecieved = false
-			windower.add_to_chat(4, "Loading currency...")
-			while not (packetARecieved and packetBRecieved) do
-				-- use this so the game doesn't crash
-				coroutine.sleep(0.01)
-			end
-			search(searchTerm)
-		end
-	else
-		print("Currency addon usage:")
-		print("curr search <term> | curr s <term>")
-		print("> searches for currency that matches <term>")
+windower.register_event("addon command", function(...)
+	inject()
+	local searchTerm = generateSearchTerm(table.unpack(arg))
+	packetARecieved = false
+	packetBRecieved = false
+	windower.add_to_chat(4, "Loading currency...")
+	while not (packetARecieved and packetBRecieved) do
+		-- use this so the game doesn't crash
+		coroutine.sleep(0.01)
 	end
+	search(searchTerm)
 end)
 
 windower.register_event("incoming chunk", function(id, original, modified, injected, blocked)
