@@ -88,6 +88,62 @@ local function sublimation()
   end
 end
 
+local function nuke(commands)
+  local spell = commands[1]
+  local spell_command = 'input /ma '
+  local tier = ''
+  local num = tonumber(spell[#spell])
+  if num == 1 then
+    tier = ''
+  elseif num == 2 then
+    tier = ' II'
+  elseif num == 3 then
+    tier = ' III'
+  elseif num == 4 then
+    tier = ' IV'
+  elseif num == 5 then
+    tier = ' V'
+  else
+    windower.add_to_chat(122, 'Scholar: Invalid nuke tier')
+    return
+  end
+
+  if spell:find('fh') then
+    spell_command = spell_command .. '"Pyrohelix' .. tier .. '" <t>'
+  elseif spell:find('wh') then
+    spell_command = spell_command .. '"Hydrohelix' .. tier .. '" <t>'
+  elseif spell:find('sh') then
+    spell_command = spell_command .. 'Geohelix' .. tier .. '" <t>'
+  elseif spell:find('bh') then
+    spell_command = spell_command .. 'Cryohelix' .. tier .. '" <t>'
+  elseif spell:find('th') then
+    spell_command = spell_command .. '"Ionohelix' .. tier .. '" <t>'
+  elseif spell:find('ah') then
+    spell_command = spell_command .. '"Anemohelix' .. tier .. '" <t>'
+  elseif spell:find('lh') then
+    spell_command = spell_command .. '"Luminohelix' .. tier .. '" <t>'
+  elseif spell:find('dh') then
+    spell_command = spell_command .. '"Noctohelix' .. tier .. '" <t>'
+  elseif spell[1] == 'f' then
+    spell_command = spell_command .. '"Fire' .. tier .. '" <t>'
+  elseif spell[1] == 'w' then
+    spell_command = spell_command .. '"Water' .. tier .. '" <t>'
+  elseif spell[1] == 's' then
+    spell_command = spell_command .. 'Stone' .. tier .. '" <t>'
+  elseif spell[1] == 'b' then
+    spell_command = spell_command .. 'Blizzard' .. tier .. '" <t>'
+  elseif spell[1] == 't' then
+    spell_command = spell_command .. '"Thunder' .. tier .. '" <t>'
+  elseif spell[1] == 'a' then
+    spell_command = spell_command .. '"Aero' .. tier .. '" <t>'
+  else
+    windower.add_to_chat(122, 'Scholar: Failed to find nuke for ' .. spell)
+    return
+  end
+
+  windower.send_command(spell_command)
+end
+
 windower.register_event('addon command', function(...)
   local commands = T({ ... })
   if #commands == 0 then
@@ -102,6 +158,8 @@ windower.register_event('addon command', function(...)
       sublimation()
     elseif command == 'skillchain' or command == 'sc' then
       skillchain(commands:slice(2, #commands))
+    elseif command == 'nuke' then
+      nuke(commands:slice(2, #commands))
     else
       local buffs = get_buffs()
       local duration = false
