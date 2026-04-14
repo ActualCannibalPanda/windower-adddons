@@ -121,7 +121,7 @@ local t = {
     .. ' wait 4;'
     .. ' input /ja "Immanence" <me>;'
     .. ' wait 2;'
-    .. ' input /ma "Luminohelix" <t>;'
+    .. ' input /ma "Noctohelix" <t>;'
     .. ' wait 3;'
     .. ' input /p <<<<<<<<< Closing Compression (Darkness) Skillchain <call20>',
 }
