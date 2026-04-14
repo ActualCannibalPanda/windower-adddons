@@ -3,6 +3,7 @@ _addon.author = 'Cromakre'
 _addon.version = '1.0.1'
 _addon.command = 'curr'
 
+require('tables')
 packets = require('packets')
 
 local incomingCurrencyMenu1 = 0x113
@@ -26,15 +27,6 @@ local function stripNames(str)
   ret = string.gsub(ret, "[.'-]+", '')
   ret = string.gsub(ret, ' ', '')
   return ret
-end
-
-local function generateSearchTerm(...)
-  local searchTerm = ''
-  for i, v in ipairs(arg) do
-    searchTerm = searchTerm .. tostring(v)
-  end
-
-  return stripNames(searchTerm)
 end
 
 local function search(searchTerm)
@@ -61,7 +53,7 @@ end
 
 windower.register_event('addon command', function(...)
   inject()
-  local searchTerm = generateSearchTerm(table.unpack(arg))
+  local searchTerm = stripNames(T({ ... }):concat(' '))
   packetARecieved = false
   packetBRecieved = false
   windower.add_to_chat(4, 'Loading currency...')
