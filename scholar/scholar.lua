@@ -162,43 +162,68 @@ windower.register_event('addon command', function(...)
       nuke(commands:slice(2, #commands))
     else
       local buffs = get_buffs()
-      local duration = false
-      local aoe = false
       local command_buffer = L()
       local spell_command = nil
       for _, command in ipairs(commands) do
         if buffs:contains('Light Arts') or buffs:contains('Addendum: White') then
           if command == 'duration' or command == 'dur' then
-            command_buffer:append('input /ja "Perpetuance" <me>; wait 1; ')
+            command_buffer:append('input /ja "Perpetuance" <me>; wait 1')
           elseif command == 'aoe' then
-            command_buffer:append('input /ja "Accession" <me>; wait 1; ')
+            command_buffer:append('input /ja "Accession" <me>; wait 1')
           else
-            for _, spell in ipairs(resources.spells) do
-              if spell.en == command and spell.type == 'WhiteMagic' then
-                spell_command = 'input /ma "' .. command .. '" <me>; wait 1; '
-              end
+            if not resources.spells:en(command):empty() then
+              spell_command = 'input /ma "' .. command .. '" <me>; wait 1; '
             end
           end
         elseif buffs:contains('Dark Arts') or buffs:contains('Addendum: Black') then
-          if not aoe and command == 'aoe' then
-            command_buffer:append('input /ja "Manifestation" <me>; wait 1; ')
-          elseif not duration and command == 'duration' or command == 'dur' then
+          if command == 'aoe' then
+            command_buffer:append('input /ja "Manifestation" <me>; wait 1')
+          elseif command == 'duration' or command == 'dur' then
             windower.add_to_chat(122, 'Scholar: No Duration skill exists for Dark Arts')
           else
-            for _, spell in ipairs(resources.spells) do
-              if spell.en == command and spell.type == 'BlackMagic' then
-                spell_command = 'input /ma "' .. command .. ' <me>"; wait 1; '
-              end
+            if not resources.spells:en(command):empty() then
+              spell_command = 'input /ma "' .. command .. '" <me>; wait 1; '
             end
           end
+        end
+        if command == 'fs' then
+          spell_command = 'input /ma "Firestorm" <me>'
+        elseif command == 'ss' then
+          spell_command = 'input /ma "Sandstorm" <me>'
+        elseif command == 'rs' then
+          spell_command = 'input /ma "Icestorm" <me>'
+        elseif command == 'ws' then
+          spell_command = 'input /ma "Hailstorm" <me>'
+        elseif command == 'ts' then
+          spell_command = 'input /ma "Thunderstorm" <me>'
+        elseif command == 'as' then
+          spell_command = 'input /ma "Aurorastorm" <me>'
+        elseif command == 'vs' then
+          spell_command = 'input /ma "Voidstorm" <me>'
+        elseif command == 'fs2' then
+          spell_command = 'input /ma "Firestorm II" <me>'
+        elseif command == 'ss2' then
+          spell_command = 'input /ma "Sandstorm II" <me>'
+        elseif command == 'rs2' then
+          spell_command = 'input /ma "Icestorm II" <me>'
+        elseif command == 'ws2' then
+          spell_command = 'input /ma "Hailstorm II" <me>'
+        elseif command == 'ts2' then
+          spell_command = 'input /ma "Thunderstorm II" <me>'
+        elseif command == 'as2' then
+          spell_command = 'input /ma "Aurorastorm II" <me>'
+        elseif command == 'vs2' then
+          spell_command = 'input /ma "Voidstorm II" <me>'
         end
       end
       if #command_buffer > 0 then
         if spell_command then
-          windower.send_command(command_buffer:concat(' ') .. spell_command)
+          windower.send_command(command_buffer:concat('; ') .. '; ' .. spell_command)
         else
-          windower.send_command(command_buffer:concat(' '))
+          windower.send_command(command_buffer:concat('; '))
         end
+      elseif spell_command then
+        windower.send_command(spell_command)
       end
     end
   end
