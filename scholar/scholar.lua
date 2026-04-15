@@ -158,7 +158,7 @@ windower.register_event('addon command', function(...)
       sublimation()
     elseif command == 'skillchain' or command == 'sc' then
       skillchain(commands:slice(2, #commands))
-    elseif command == 'nuke' then
+    elseif command == 'nuke' or command == 'n' then
       nuke(commands:slice(2, #commands))
     else
       local buffs = get_buffs()
@@ -214,6 +214,8 @@ windower.register_event('addon command', function(...)
           spell_command = 'input /ma "Aurorastorm II" <me>'
         elseif command == 'vs2' then
           spell_command = 'input /ma "Voidstorm II" <me>'
+        elseif command == 'kf' then
+          spell_command = 'input /ma "Klimaform" <me>'
         end
       end
       if #command_buffer > 0 then
