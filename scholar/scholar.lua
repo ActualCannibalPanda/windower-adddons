@@ -190,10 +190,10 @@ windower.register_event('addon command', function(...)
           spell_command = 'input /ma "Firestorm" <me>'
         elseif command == 'ss' then
           spell_command = 'input /ma "Sandstorm" <me>'
-        elseif command == 'rs' then
-          spell_command = 'input /ma "Icestorm" <me>'
-        elseif command == 'ws' then
+        elseif command == 'is' then
           spell_command = 'input /ma "Hailstorm" <me>'
+        elseif command == 'ws' then
+          spell_command = 'input /ma "Windstorm" <me>'
         elseif command == 'ts' then
           spell_command = 'input /ma "Thunderstorm" <me>'
         elseif command == 'as' then
@@ -204,10 +204,10 @@ windower.register_event('addon command', function(...)
           spell_command = 'input /ma "Firestorm II" <me>'
         elseif command == 'ss2' then
           spell_command = 'input /ma "Sandstorm II" <me>'
-        elseif command == 'rs2' then
-          spell_command = 'input /ma "Icestorm II" <me>'
-        elseif command == 'ws2' then
+        elseif command == 'hs2' then
           spell_command = 'input /ma "Hailstorm II" <me>'
+        elseif command == 'ws2' then
+          spell_command = 'input /ma "Windstorm II" <me>'
         elseif command == 'ts2' then
           spell_command = 'input /ma "Thunderstorm II" <me>'
         elseif command == 'as2' then
